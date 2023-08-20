@@ -8,4 +8,9 @@ typedef struct {
     SDL_Window *window;
 } App;
 
+typedef struct {
+    int x;
+    int y;
+} Actor;
+
 #endif //TEST_PROJECT_STRUCTS_H
