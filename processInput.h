@@ -2,7 +2,10 @@
 #define TEST_PROJECT_PROCESSINPUT_H
 
 #include <stdbool.h>
+#include "structs.h"
 
-void processInput(bool *isRunning);
+void processInput(App *app, bool *isRunning);
+void handleKeyDown(App *app, SDL_KeyboardEvent *sdlEvent);
+void handleKeyUp(App *app, SDL_KeyboardEvent *sdlEvent);
 
 #endif //TEST_PROJECT_PROCESSINPUT_H
