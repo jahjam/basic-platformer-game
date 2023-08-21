@@ -3,7 +3,7 @@
 #include "render.h"
 
 void render(App *app, Actor *actor) {
-//    SDL_SetRenderDrawColor(app->renderer, 21, 21, 21, SDL_ALPHA_OPAQUE);
+    SDL_SetRenderDrawColor(app->renderer, 21, 21, 21, SDL_ALPHA_OPAQUE);
     SDL_RenderClear(app->renderer);
 
     SDL_Surface *surface = IMG_Load("../assets/Characters_V3_Colour.png");
@@ -16,7 +16,7 @@ void render(App *app, Actor *actor) {
     }
 
     SDL_Rect srcRect = {0, 160, 16, 16};
-    SDL_Rect dstRect = {actor->x, actor->y, 32, 32};
+    SDL_Rect dstRect = {actor->actorPosition.x, actor->actorPosition.y, 64, 64};
 
     SDL_RenderCopy(app->renderer, texture, &srcRect, &dstRect);
     SDL_DestroyTexture(texture);
