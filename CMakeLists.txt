@@ -12,7 +12,13 @@ add_executable(test_project main.c
         init.h
         render.h
         processInput.h
-        main.h)
+        main.h
+        update.h
+        update.c
+        setup.h
+        setup.c
+        blit.h
+        blit.c)
 
 target_link_libraries(
         test_project PRIVATE

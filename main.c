@@ -1,10 +1,11 @@
 #include <SDL2/SDL.h>
-#include <SDL_image.h>
 #include <stdbool.h>
 #include "structs.h"
 #include "init.h"
 #include "render.h"
 #include "processInput.h"
+#include "update.h"
+#include "setup.h"
 
 int main(int argc, char *argv[]) {
     // this is our main application
@@ -17,15 +18,14 @@ int main(int argc, char *argv[]) {
     // tracking if the app is running
     bool isRunning = false;
 
-    // Init player (TO BE MOVED)
-    player.x = 20;
-    player.y = 20;
-
     init(&app, &isRunning);
 
+    setup(&player);
+
     while (isRunning) {
+        processInput(&app, &isRunning);
+        update(&app, &player);
         render(&app, &player);
-        processInput(&isRunning);
     }
 
     return 0;
