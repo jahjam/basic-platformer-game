@@ -27,35 +27,13 @@ void processInput(App *app, bool *isRunning) {
 }
 
 void handleKeyDown(App *app, SDL_KeyboardEvent *sdlEvent) {
-    if (sdlEvent->repeat == 0) {
-        if (sdlEvent->keysym.scancode == SDL_SCANCODE_W) {
-            app->up = 1;
-        }
-        if (sdlEvent->keysym.scancode == SDL_SCANCODE_S) {
-            app->down = 1;
-        }
-        if (sdlEvent->keysym.scancode == SDL_SCANCODE_A) {
-            app->left = 1;
-        }
-        if (sdlEvent->keysym.scancode == SDL_SCANCODE_D) {
-            app->right = 1;
-        }
+    if (sdlEvent->repeat == 0 && sdlEvent->keysym.scancode < MAX_KEYBOARD_KEYS) {
+      app->keyboard[sdlEvent->keysym.scancode] = 1;
     }
 }
 
 void handleKeyUp(App *app, SDL_KeyboardEvent *sdlEvent) {
-    if (sdlEvent->repeat == 0) {
-        if (sdlEvent->keysym.scancode == SDL_SCANCODE_W) {
-            app->up = 0;
-        }
-        if (sdlEvent->keysym.scancode == SDL_SCANCODE_S) {
-            app->down = 0;
-        }
-        if (sdlEvent->keysym.scancode == SDL_SCANCODE_A) {
-            app->left = 0;
-        }
-        if (sdlEvent->keysym.scancode == SDL_SCANCODE_D) {
-            app->right = 0;
-        }
+    if (sdlEvent->repeat == 0 && sdlEvent->keysym.scancode < MAX_KEYBOARD_KEYS) {
+        app->keyboard[sdlEvent->keysym.scancode] = 0;
     }
 }

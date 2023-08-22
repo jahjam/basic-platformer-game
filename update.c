@@ -1,8 +1,7 @@
 #include "structs.h"
 #include "main.h"
-#include "blit.h"
 
-void update(App *app, Actor *actor) {
+void update(App *app, Stage *stage, Actor *actor) {
     Uint32 timeToWait = MILLISEC_PER_FRAME - (SDL_GetTicks() - app->millisecsPreviousFrame);
 
     if (timeToWait > 0 && timeToWait <= MILLISEC_PER_FRAME) {
@@ -13,5 +12,6 @@ void update(App *app, Actor *actor) {
 
     app->millisecsPreviousFrame = SDL_GetTicks();
 
-    blit(app, actor, deltaTime);
+    app->delegate.logic(app, actor, stage, deltaTime);
+    app->delegate.draw(app, actor, stage);
 }

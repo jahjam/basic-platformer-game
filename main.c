@@ -10,22 +10,24 @@
 int main(int argc, char *argv[]) {
     // this is our main application
     App app;
+    memset(&app, 0, sizeof(App));
     // this is our main player
     Actor player;
-    // setting a bunch of bytes to 0 for the size of the app
-    memset(&app, 0, sizeof(App));
     memset(&player, 0, sizeof(Actor));
+
+    Stage stage;
+
+
     // tracking if the app is running
     bool isRunning = false;
 
     init(&app, &isRunning);
 
-    setup(&player);
+    setup(&app, &player, &stage);
 
     while (isRunning) {
         processInput(&app, &isRunning);
-        update(&app, &player);
-        render(&app, &player);
+        update(&app, &stage, &player);
     }
 
     return 0;

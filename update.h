@@ -3,6 +3,6 @@
 
 #include "structs.h"
 
-void update (App *app, Actor *actor);
+void update (App *app, Stage *stage, Actor *actor);
 
 #endif //TEST_PROJECT_UPDATE_H
