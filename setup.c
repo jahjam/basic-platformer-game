@@ -99,33 +99,34 @@ static void fireArrow(App *app, Stage *stage, Actor *player){
     arrow->srcRectl.y = 0;
     arrow->texture = IMG_LoadTexture(app->renderer, "../assets/bow-and-arrows.png");
 
+    // positions the arrow central to the player sprite
     arrow->actorPosition.y += (player->actorDimensions.h / 2) - (arrow->actorDimensions.h / 2);
 
     player->reload = 8;
 }
 
 static void handleArrows(Stage *stage, double deltaTime) {
-    Actor *b, *prev;
+    Actor *arrow, *prev;
     SDL_Rect screenBounds;
     SDL_GetDisplayBounds(0, &screenBounds);
 
     prev = &stage->arrowHead;
 
-    for (b = stage->arrowHead.next; b != NULL; b = b->next) {
-        b->actorPosition.x += b->actorVelocity.x * deltaTime;
-        b->actorPosition.y += b->actorVelocity.y * deltaTime;
+    for (arrow = stage->arrowHead.next; arrow != NULL; arrow = arrow->next) {
+        arrow->actorPosition.x += arrow->actorVelocity.x * deltaTime;
+        arrow->actorPosition.y += arrow->actorVelocity.y * deltaTime;
 
-        if (b->actorPosition.x > screenBounds.w) {
-            if (b == stage->arrowTail)  {
+        if (arrow->actorPosition.x > screenBounds.w) {
+            if (arrow == stage->arrowTail)  {
                 stage->arrowTail = prev;
             }
 
-            prev->next = b->next;
-            free(b);
-            b = prev;
+            prev->next = arrow->next;
+            free(arrow);
+            arrow = prev;
         }
 
-        prev = b;
+        prev = arrow;
     }
 }
 
