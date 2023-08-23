@@ -7,7 +7,5 @@ void blit(App *app, Actor *actor) {
                         (int) actor->actorDimensions.w,
                         (int) actor->actorDimensions.h};
 
-    printf("%f\n", actor->actorPosition.y);
-
     SDL_RenderCopy(app->renderer, actor->texture, &srcRect, &dstRect);
 }
