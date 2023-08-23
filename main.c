@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
     memset(&player, 0, sizeof(Actor));
 
     Stage stage;
-
+    memset(&stage, 0, sizeof(Stage));
 
     // tracking if the app is running
     bool isRunning = false;
