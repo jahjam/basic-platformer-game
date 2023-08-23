@@ -26,8 +26,10 @@ int main(int argc, char *argv[]) {
     setup(&app, &player, &stage);
 
     while (isRunning) {
+        prepare(&app);
         processInput(&app, &isRunning);
         update(&app, &stage, &player);
+        render(&app);
     }
 
     return 0;

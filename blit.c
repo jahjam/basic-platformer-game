@@ -1,14 +1,13 @@
 #include "structs.h"
 
-void blit(App *app, SDL_Texture *texture, int x, int y) {
-    SDL_Rect dest;
+void blit(App *app, Actor *actor) {
+    SDL_Rect srcRect = actor->srcRectl;
+    SDL_Rect dstRect = {(int) actor->actorPosition.x,
+                        (int) actor->actorPosition.y,
+                        (int) actor->actorDimensions.w,
+                        (int) actor->actorDimensions.h};
 
-    dest.x = x;
-    dest.y = y;
+    printf("%f\n", actor->actorPosition.y);
 
-    SDL_QueryTexture(texture, NULL, NULL, &dest.w, &dest.h);
-
-    printf("%d\n", dest.x);
-
-    SDL_RenderCopy(app->renderer, texture, NULL, &dest);
+    SDL_RenderCopy(app->renderer, actor->texture, &srcRect, &dstRect);
 }

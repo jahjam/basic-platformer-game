@@ -1,7 +1,6 @@
 #include "structs.h"
 #include "setup.h"
 #include "blit.h"
-#include "render.h"
 #include <SDL_image.h>
 
 static void logic(App *app, Actor *actor, Stage *stage, double deltaTime) {
@@ -57,6 +56,10 @@ static void handlePlayer(App *app, Actor *actor, Stage *stage, double deltaTime)
         && actor->actorPosition.y >= 0
         && actor->actorPosition.x <= screenBounds.w - 64
         && actor->actorPosition.y <= screenBounds.h - 64) {
+        if (actor->reload > 0)
+        {
+            actor->reload--;
+        }
         if (app->keyboard[SDL_SCANCODE_W]) {
             actor->actorPosition.y -= actor->actorVelocity.y * deltaTime;
         }
@@ -69,7 +72,7 @@ static void handlePlayer(App *app, Actor *actor, Stage *stage, double deltaTime)
         if (app->keyboard[SDL_SCANCODE_A]) {
             actor->actorPosition.x -= actor->actorVelocity.x * deltaTime;
         }
-        if (app->keyboard[SDL_SCANCODE_F]) {
+        if (app->keyboard[SDL_SCANCODE_F] && actor->reload == 0) {
             fireArrow(app, stage, actor);
         }
     }
@@ -86,13 +89,13 @@ static void fireArrow(App *app, Stage *stage, Actor *player){
 
     arrow->actorPosition.x = player->actorPosition.x;
     arrow->actorPosition.y = player->actorPosition.y;
-    arrow->actorVelocity.y = PLAYER_ARROW_SPEED;
+    arrow->actorVelocity.x = PLAYER_ARROW_SPEED;
     arrow->health = 1;
-    arrow->actorDimensions.w = 48;
-    arrow->actorDimensions.h = 48;
-    arrow->srcRectl.w = 48;
-    arrow->srcRectl.h = 48;
-    arrow->srcRectl.x = 0;
+    arrow->actorDimensions.w = 16;
+    arrow->actorDimensions.h = 16;
+    arrow->srcRectl.w = 16;
+    arrow->srcRectl.h = 16;
+    arrow->srcRectl.x = 32;
     arrow->srcRectl.y = 0;
     arrow->texture = IMG_LoadTexture(app->renderer, "../assets/bow-and-arrows.png");
 
@@ -127,13 +130,13 @@ static void handleArrows(Stage *stage, double deltaTime) {
 }
 
 static void drawPlayer(App *app, Actor *player) {
-    render(app, player);
+    blit(app, player);
 }
 
 static void drawArrows(App *app, Stage *stage) {
     Actor *b;
 
     for (b = stage->arrowHead.next; b != NULL; b = b->next) {
-        render(app, b);
+        blit(app, b);
     }
 }

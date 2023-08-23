@@ -3,6 +3,7 @@
 
 #include "structs.h"
 
-void render(App *app, Actor *player);
+void prepare(App *app);
+void render(App *app);
 
 #endif //TEST_PROJECT_RENDER_H

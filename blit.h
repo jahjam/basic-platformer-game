@@ -3,6 +3,6 @@
 
 #include "structs.h"
 
-void blit(App *app, SDL_Texture *texture, int x, int y);
+void blit(App *app, Actor *actor);
 
 #endif //TEST_PROJECT_BLIT_H
