@@ -18,7 +18,9 @@ add_executable(test_project main.c
         setup.h
         setup.c
         blit.h
-        blit.c)
+        blit.c
+        util.h
+        util.c)
 
 target_link_libraries(
         test_project PRIVATE

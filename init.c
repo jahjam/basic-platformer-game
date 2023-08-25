@@ -1,6 +1,3 @@
-#include <stdbool.h>
-#include "structs.h"
-#include "defs.h"
 #include "init.h"
 
 void init(App *app, bool *isRunning) {
