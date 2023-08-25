@@ -1,12 +1,4 @@
-#include <SDL2/SDL.h>
-#include <stdbool.h>
-#include <time.h>
-#include "structs.h"
-#include "init.h"
-#include "render.h"
-#include "processInput.h"
-#include "update.h"
-#include "setup.h"
+#include "main.h"
 
 int main(int argc, char *argv[]) {
     // this is our main application
