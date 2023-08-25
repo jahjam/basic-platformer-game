@@ -1,7 +1,4 @@
-#include <SDL2/SDL.h>
-#include <stdbool.h>
 #include "processInput.h"
-#include "structs.h"
 
 void processInput(App *app, bool *isRunning) {
     SDL_Event sdlEvent;

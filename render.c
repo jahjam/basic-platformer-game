@@ -1,5 +1,3 @@
-#include <SDL_image.h>
-#include "structs.h"
 #include "render.h"
 
 void prepare(App *app) {

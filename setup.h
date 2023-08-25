@@ -2,6 +2,9 @@
 #define TEST_PROJECT_SETUP_H
 
 #include "structs.h"
+#include "blit.h"
+#include <SDL_image.h>
+#include <stdlib.h>
 
 static SDL_Texture *arrowTexture;
 static SDL_Texture *enemyTexture;

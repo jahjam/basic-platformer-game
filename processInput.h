@@ -1,6 +1,7 @@
 #ifndef TEST_PROJECT_PROCESSINPUT_H
 #define TEST_PROJECT_PROCESSINPUT_H
 
+#include <SDL2/SDL.h>
 #include <stdbool.h>
 #include "structs.h"
 

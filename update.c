@@ -1,5 +1,4 @@
-#include "structs.h"
-#include "main.h"
+#include "update.h"
 
 void update(App *app, Stage *stage, Actor *actor) {
     Uint32 timeToWait = MILLISEC_PER_FRAME - (SDL_GetTicks() - app->millisecsPreviousFrame);

@@ -1,8 +1,4 @@
-#include "structs.h"
 #include "setup.h"
-#include "blit.h"
-#include <SDL_image.h>
-#include <stdlib.h>
 
 static void logic(App *app, Actor *player, Stage *stage, double deltaTime) {
     handlePlayer(app, player, stage, deltaTime);
