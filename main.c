@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
     while (isRunning) {
         prepare(&app);
         processInput(&app, &isRunning);
-        update(&app, &stage, &player);
+        update(&app, &stage, &player, MILLISEC_PER_FRAME);
         render(&app);
     }
 

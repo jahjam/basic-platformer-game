@@ -3,8 +3,7 @@
 
 #include "structs.h"
 #include "structs.h"
-#include "main.h"
 
-void update (App *app, Stage *stage, Actor *actor);
+void update (App *app, Stage *stage, Actor *actor, int MILLISEC_PER_FRAME);
 
 #endif //TEST_PROJECT_UPDATE_H
