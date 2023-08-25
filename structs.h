@@ -42,6 +42,7 @@ struct Actor {
     int yOffset;
     Actor *next;
     SDL_Texture *texture;
+    SDL_RendererFlip flipType;
     SDL_Rect srcRectl;
 };
 

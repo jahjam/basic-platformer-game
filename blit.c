@@ -7,5 +7,5 @@ void blit(App *app, Actor *actor) {
                         (int) actor->actorDimensions.w,
                         (int) actor->actorDimensions.h};
 
-    SDL_RenderCopy(app->renderer, actor->texture, &srcRect, &dstRect);
+    SDL_RenderCopyEx(app->renderer, actor->texture, &srcRect, &dstRect, 0, 0, actor->flipType);
 }

@@ -6,6 +6,7 @@
 static SDL_Texture *arrowTexture;
 static SDL_Texture *enemyTexture;
 static int enemySpawnTimer;
+SDL_Rect screenBounds;
 
 void setup (App *app, Actor *actor, Stage *stage);
 static void draw(App *app, Actor *actor, Stage *stage);
@@ -15,6 +16,9 @@ static void handlePlayer(App *app, Actor *actor, Stage *stage, double deltaTime)
 static void handleArrows(Stage *stage, double deltaTime);
 static void drawArrows(App *app, Stage *stage);
 static void drawPlayer(App *app, Actor *actor);
-static void fireArrow(App *app, Stage *stage, Actor *player);
+static void handleEnemy(Stage *stage,  Actor *player, double deltaTime);
+static void spawnEnemy(Stage *stage);
+static void drawEnemy(App *app, Stage *stage);
+static void fireArrow(Stage *stage, Actor *player);
 
 #endif //TEST_PROJECT_SETUP_H
