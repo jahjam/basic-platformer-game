@@ -1,5 +1,6 @@
 #include <SDL2/SDL.h>
 #include <stdbool.h>
+#include <time.h>
 #include "structs.h"
 #include "init.h"
 #include "render.h"
@@ -20,6 +21,8 @@ int main(int argc, char *argv[]) {
 
     // tracking if the app is running
     bool isRunning = false;
+
+    srand(time(NULL));
 
     init(&app, &isRunning);
 

@@ -2,6 +2,7 @@
 #include "setup.h"
 #include "blit.h"
 #include <SDL_image.h>
+#include <stdlib.h>
 
 static void logic(App *app, Actor *actor, Stage *stage, double deltaTime) {
     handlePlayer(app, actor, stage, deltaTime);
@@ -40,6 +41,9 @@ void setup(App *app, Actor *actor, Stage *stage) {
     stage->arrowTail = &stage->arrowHead;
 
     setupPlayer(app, actor, stage);
+
+    arrowTexture = IMG_LoadTexture(app->renderer, "../assets/bow-and-arrows.png");
+    enemyTexture = IMG_LoadTexture(app->renderer, "../assets/bow-and-arrows.png");
 }
 
 static void handlePlayer(App *app, Actor *actor, Stage *stage, double deltaTime) {
@@ -87,9 +91,13 @@ static void fireArrow(App *app, Stage *stage, Actor *player){
     stage->arrowTail->next = arrow;
     stage->arrowTail = arrow;
 
+    int offset = rand() % 51;
+    int yOffset =  rand() % 51 - offset;
+
     arrow->actorPosition.x = player->actorPosition.x;
     arrow->actorPosition.y = player->actorPosition.y;
     arrow->actorVelocity.x = PLAYER_ARROW_SPEED;
+    arrow->yOffset = yOffset;
     arrow->health = 1;
     arrow->actorDimensions.w = 16;
     arrow->actorDimensions.h = 16;
@@ -97,7 +105,7 @@ static void fireArrow(App *app, Stage *stage, Actor *player){
     arrow->srcRectl.h = 16;
     arrow->srcRectl.x = 32;
     arrow->srcRectl.y = 0;
-    arrow->texture = IMG_LoadTexture(app->renderer, "../assets/bow-and-arrows.png");
+    arrow->texture = arrowTexture;
 
     // positions the arrow central to the player sprite
     arrow->actorPosition.y += (player->actorDimensions.h / 2) - (arrow->actorDimensions.h / 2);
@@ -114,7 +122,7 @@ static void handleArrows(Stage *stage, double deltaTime) {
 
     for (arrow = stage->arrowHead.next; arrow != NULL; arrow = arrow->next) {
         arrow->actorPosition.x += arrow->actorVelocity.x * deltaTime;
-        arrow->actorPosition.y += arrow->actorVelocity.y * deltaTime;
+        arrow->actorPosition.y += arrow->actorVelocity.y + arrow->yOffset * deltaTime;
 
         if (arrow->actorPosition.x > screenBounds.w) {
             if (arrow == stage->arrowTail)  {

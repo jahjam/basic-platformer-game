@@ -39,6 +39,7 @@ struct Actor {
     Dimensions actorDimensions;
     int health;
     int reload;
+    int yOffset;
     Actor *next;
     SDL_Texture *texture;
     SDL_Rect srcRectl;

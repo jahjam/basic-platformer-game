@@ -3,6 +3,10 @@
 
 #include "structs.h"
 
+static SDL_Texture *arrowTexture;
+static SDL_Texture *enemyTexture;
+static int enemySpawnTimer;
+
 void setup (App *app, Actor *actor, Stage *stage);
 static void draw(App *app, Actor *actor, Stage *stage);
 static void logic(App *app, Actor *actor, Stage *stage, double deltaTime);
