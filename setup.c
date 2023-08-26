@@ -28,6 +28,8 @@ static void setupPlayer(App *app, Actor *player, Stage *stage) {
     player->srcRectl.x = 0;
     player->srcRectl.y = 160;
     player->flipType = SDL_FLIP_NONE;
+    player->side = SIDE_PLAYER;
+    player->health = 1;
 
     player->texture = IMG_LoadTexture(app->renderer, "../assets/Characters_V3_Colour.png");
 }
@@ -96,7 +98,6 @@ static void fireArrow(Stage *stage, Actor *player) {
     arrow->actorPosition.y = player->actorPosition.y;
     arrow->actorVelocity.x = PLAYER_ARROW_SPEED;
     arrow->yOffset = yOffset;
-    arrow->health = 1;
     arrow->actorDimensions.w = 16;
     arrow->actorDimensions.h = 16;
     arrow->srcRectl.w = 16;
@@ -104,6 +105,7 @@ static void fireArrow(Stage *stage, Actor *player) {
     arrow->srcRectl.x = 32;
     arrow->srcRectl.y = 0;
     arrow->texture = arrowTexture;
+    arrow->side = SIDE_PLAYER;
 
     // positions the arrow central to the player sprite
     arrow->actorPosition.y += (player->actorDimensions.h / 2) - (arrow->actorDimensions.h / 2);
@@ -133,6 +135,8 @@ static void spawnEnemy(Stage *stage) {
         enemy->srcRectl.y = 192;
         enemy->actorVelocity.x = -100.0;
         enemy->flipType = SDL_FLIP_HORIZONTAL;
+        enemy->side = SIDE_ENEMY;
+        enemy->health = 1;
 
         enemySpawnTimer = 30 + (rand() % 60);
     }
@@ -148,7 +152,7 @@ static void handleEnemy(Stage *stage, Actor *player, double deltaTime) {
             enemy->actorPosition.x += enemy->actorVelocity.x * deltaTime;
             enemy->actorPosition.y += enemy->actorVelocity.y * deltaTime;
 
-            if (enemy->actorPosition.x < -enemy->actorDimensions.w) {
+            if (enemy->actorPosition.x < -enemy->actorDimensions.w || enemy->health <= 0) {
                 if (enemy == stage->fighterTail) {
                     stage->fighterTail = prev;
                 }
@@ -161,7 +165,6 @@ static void handleEnemy(Stage *stage, Actor *player, double deltaTime) {
             prev = enemy;
         }
     }
-
 }
 
 static void handleArrows(Stage *stage, double deltaTime) {
@@ -173,7 +176,7 @@ static void handleArrows(Stage *stage, double deltaTime) {
         arrow->actorPosition.x += arrow->actorVelocity.x * deltaTime;
         arrow->actorPosition.y += arrow->actorVelocity.y + arrow->yOffset * deltaTime;
 
-        if (arrow->actorPosition.x > screenBounds.w) {
+        if (arrowHitEnemy(stage, arrow) || arrow->actorPosition.x > screenBounds.w) {
             if (arrow == stage->arrowTail) {
                 stage->arrowTail = prev;
             }
@@ -185,6 +188,28 @@ static void handleArrows(Stage *stage, double deltaTime) {
 
         prev = arrow;
     }
+}
+
+static int arrowHitEnemy(Stage *stage, Actor *arrow) {
+    Actor *enemy;
+
+    for (enemy = stage->fighterHead.next; enemy != NULL; enemy = enemy->next) {
+        if (enemy->side != arrow->side && collision(
+                arrow->actorPosition.x,
+                arrow->actorPosition.y,
+                arrow->actorDimensions.h,
+                arrow->actorDimensions.w,
+                enemy->actorPosition.x,
+                enemy->actorPosition.y,
+                enemy->actorDimensions.h,
+                enemy->actorDimensions.w
+        )) {
+            enemy->health = 0;
+            return 1;
+        }
+    }
+
+    return 0;
 }
 
 static void drawPlayer(App *app, Actor *player) {
