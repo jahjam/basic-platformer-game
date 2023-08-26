@@ -1,8 +1,8 @@
 #include "setup.h"
 
-static void logic(App *app, Actor *player, Stage *stage, double deltaTime) {
+static void logic(App *app, Actor *player, Stage *stage, double deltaTime, bool *playerIsAlive) {
     handlePlayer(app, player, stage, deltaTime);
-    handleEnemy(stage, player, deltaTime);
+    handleEnemy(stage, player, deltaTime, playerIsAlive);
     handleArrows(stage, deltaTime);
     spawnEnemy(stage);
 }
@@ -144,7 +144,7 @@ static void spawnEnemy(Stage *stage) {
     }
 }
 
-static void handleEnemy(Stage *stage, Actor *player, double deltaTime) {
+static void handleEnemy(Stage *stage, Actor *player, double deltaTime, bool *playerIsAlive) {
     Actor *enemy, *prev;
 
     prev = &stage->fighterHead;
@@ -153,6 +153,20 @@ static void handleEnemy(Stage *stage, Actor *player, double deltaTime) {
         if (enemy != player) {
             enemy->actorPosition.x += enemy->actorVelocity.x * deltaTime;
             enemy->actorPosition.y += enemy->actorVelocity.y * deltaTime;
+
+            if (collision(
+                    enemy->actorPosition.x,
+                    enemy->actorPosition.y,
+                    enemy->actorDimensions.h,
+                    enemy->actorDimensions.w,
+                    player->actorPosition.x,
+                    player->actorPosition.y,
+                    player->actorDimensions.h,
+                    player->actorDimensions.w
+            )) {
+                // handle end game
+                *playerIsAlive = false;
+            }
 
             if (enemy->actorPosition.x < -enemy->actorDimensions.w || enemy->health <= 0) {
                 if (enemy == stage->fighterTail) {

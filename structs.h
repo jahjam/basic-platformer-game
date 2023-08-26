@@ -1,15 +1,16 @@
-#include <SDL2/SDL.h>
-#include "defs.h"
-
 #ifndef TEST_PROJECT_STRUCTS_H
 #define TEST_PROJECT_STRUCTS_H
+
+#include <SDL2/SDL.h>
+#include <stdbool.h>
+#include "defs.h"
 
 typedef struct Actor Actor;
 typedef struct App App;
 typedef struct Stage Stage;
 
 typedef struct {
-    void (*logic)(App *app, Actor *actor, Stage *stage, double deltaTime);
+    void (*logic)(App *app, Actor *actor, Stage *stage, double deltaTime, bool *playerIsAlive);
 
     void (*draw)(App *app, Actor *actor, Stage *stage);
 } Delegate;

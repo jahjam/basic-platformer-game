@@ -14,16 +14,18 @@ int main(int argc, char *argv[]) {
     // tracking if the app is running
     bool isRunning = false;
 
+    bool playerIsAlive = true;
+
     srand(time(NULL));
 
     init(&app, &isRunning);
 
     setup(&app, &player, &stage);
 
-    while (isRunning) {
+    while (isRunning && playerIsAlive) {
         prepare(&app);
         processInput(&app, &isRunning);
-        update(&app, &stage, &player, MILLISEC_PER_FRAME);
+        update(&app, &stage, &player, MILLISEC_PER_FRAME, &playerIsAlive);
         render(&app);
     }
 

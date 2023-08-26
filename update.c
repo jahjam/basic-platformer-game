@@ -1,6 +1,6 @@
 #include "update.h"
 
-void update(App *app, Stage *stage, Actor *actor, int MILLISEC_PER_FRAME) {
+void update(App *app, Stage *stage, Actor *actor, int MILLISEC_PER_FRAME, bool *playerIsAlive) {
     Uint32 timeToWait = MILLISEC_PER_FRAME - (SDL_GetTicks() - app->millisecsPreviousFrame);
 
     if (timeToWait > 0 && timeToWait <= MILLISEC_PER_FRAME) {
@@ -11,6 +11,6 @@ void update(App *app, Stage *stage, Actor *actor, int MILLISEC_PER_FRAME) {
 
     app->millisecsPreviousFrame = SDL_GetTicks();
 
-    app->delegate.logic(app, actor, stage, deltaTime);
+    app->delegate.logic(app, actor, stage, deltaTime, playerIsAlive);
     app->delegate.draw(app, actor, stage);
 }
