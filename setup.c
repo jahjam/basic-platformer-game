@@ -110,7 +110,7 @@ static void fireArrow(Stage *stage, Actor *player) {
     // positions the arrow central to the player sprite
     arrow->actorPosition.y += (player->actorDimensions.h / 2) - (arrow->actorDimensions.h / 2);
 
-    player->reload = 8;
+    player->reload = 30;
 }
 
 static void spawnEnemy(Stage *stage) {
@@ -124,8 +124,10 @@ static void spawnEnemy(Stage *stage) {
         stage->fighterTail->next = enemy;
         stage->fighterTail = enemy;
 
+        int randSpawn = rand() % screenBounds.h - 32;
+
         enemy->actorPosition.x = screenBounds.w;
-        enemy->actorPosition.y = rand() % screenBounds.h;
+        enemy->actorPosition.y = randSpawn > 0 ? randSpawn : 2;
         enemy->texture = enemyTexture;
         enemy->actorDimensions.w = 32;
         enemy->actorDimensions.h = 32;
