@@ -7,7 +7,7 @@ int main(int argc, char *argv[]) {
     // this is our main player
     Actor player;
     memset(&player, 0, sizeof(Actor));
-
+    // this is the main stage (linked list of entities)
     Stage stage;
     memset(&stage, 0, sizeof(Stage));
 
