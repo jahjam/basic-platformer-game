@@ -3,6 +3,6 @@
 
 #include "defs.h"
 
-int collision(int x1, int y1, int h1, int w1, int x2, int y2, int w2, int h2);
+double collision(double x1, double y1, double h1, double w1, double x2, double y2, double w2, double h2);
 
 #endif //TEST_PROJECT_UTIL_H
