@@ -46,6 +46,9 @@ struct Actor {
     SDL_RendererFlip flipType;
     SDL_Rect srcRectl;
     int side;
+    int numFrames;
+    int frameRatePerSecond;
+    Uint32 animationStartTime;
 };
 
 struct Stage {

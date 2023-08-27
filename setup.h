@@ -7,6 +7,8 @@
 #include <SDL_image.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <time.h>
+#include "animate.h"
 
 static SDL_Texture *arrowTexture;
 static SDL_Texture *enemyTexture;
