@@ -45,7 +45,7 @@ void setup(App *app, Actor *actor, Stage *stage) {
     setupPlayer(app, actor, stage);
 
     arrowTexture = IMG_LoadTexture(app->renderer, "../assets/bow-and-arrows.png");
-    enemyTexture = IMG_LoadTexture(app->renderer, "../assets/Characters_V3_Colour.png");
+    enemyTexture = IMG_LoadTexture(app->renderer, "../assets/enemy-sprite-sheet.png");
 
     SDL_GetDisplayBounds(0, &screenBounds);
 }
@@ -94,7 +94,7 @@ static void fireArrow(Stage *stage, Actor *player) {
     int offset = rand() % 51;
     int yOffset = rand() % 51 - offset;
 
-    arrow->actorPosition.x = player->actorPosition.x;
+    arrow->actorPosition.x = player->actorPosition.x + 32;
     arrow->actorPosition.y = player->actorPosition.y;
     arrow->actorVelocity.x = PLAYER_ARROW_SPEED;
     arrow->yOffset = yOffset;
@@ -133,12 +133,15 @@ static void spawnEnemy(Stage *stage) {
         enemy->actorDimensions.h = 32;
         enemy->srcRectl.w = 16;
         enemy->srcRectl.h = 16;
-        enemy->srcRectl.x = 32;
-        enemy->srcRectl.y = 192;
+        enemy->srcRectl.x = 0;
+        enemy->srcRectl.y = 0;
         enemy->actorVelocity.x = -100.0;
         enemy->flipType = SDL_FLIP_HORIZONTAL;
         enemy->side = SIDE_ENEMY;
         enemy->health = 1;
+        enemy->frameRatePerSecond = 5;
+        enemy->numFrames = 2;
+        enemy->animationStartTime = SDL_GetTicks();
 
         enemySpawnTimer = 30 + (rand() % 60);
     }
@@ -151,6 +154,8 @@ static void handleEnemy(Stage *stage, Actor *player, double deltaTime, bool *pla
 
     for (enemy = stage->fighterHead.next; enemy != NULL; enemy = enemy->next) {
         if (enemy != player) {
+            animate(enemy, 1);
+
             enemy->actorPosition.x += enemy->actorVelocity.x * deltaTime;
             enemy->actorPosition.y += enemy->actorVelocity.y * deltaTime;
 
