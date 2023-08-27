@@ -29,7 +29,7 @@ void init(App *app, bool *isRunning) {
         return;
     }
 
-    SDL_SetWindowFullscreen(app->window, SDL_WINDOW_FULLSCREEN);
+//    SDL_SetWindowFullscreen(app->window, SDL_WINDOW_FULLSCREEN);
 
     *isRunning = true;
 }
