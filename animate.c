@@ -9,3 +9,8 @@ void animate(Actor *actor, int aniIndex) {
     actor->srcRectl.y = (int)(aniIndex * actor->srcRectl.h);
     actor->srcRectl.x = (int)(currentFrame * actor->srcRectl.w);
 }
+
+void resetSprite(Actor *actor) {
+    actor->srcRectl.y = 0;
+    actor->srcRectl.x = 0;
+}
