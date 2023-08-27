@@ -49,6 +49,7 @@ struct Actor {
     int numFrames;
     int frameRatePerSecond;
     Uint32 animationStartTime;
+    bool isAnimating;
 };
 
 struct Stage {
