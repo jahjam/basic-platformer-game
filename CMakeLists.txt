@@ -20,7 +20,9 @@ add_executable(test_project main.c
         blit.h
         blit.c
         util.h
-        util.c)
+        util.c
+        animate.h
+        animate.c)
 
 target_link_libraries(
         test_project PRIVATE
