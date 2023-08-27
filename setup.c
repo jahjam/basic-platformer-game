@@ -26,12 +26,16 @@ static void setupPlayer(App *app, Actor *player, Stage *stage) {
     player->srcRectl.w = 16;
     player->srcRectl.h = 16;
     player->srcRectl.x = 0;
-    player->srcRectl.y = 160;
+    player->srcRectl.y = 0;
     player->flipType = SDL_FLIP_NONE;
     player->side = SIDE_PLAYER;
     player->health = 1;
+    player->frameRatePerSecond = 5;
+    player->numFrames = 2;
+    player->animationStartTime = SDL_GetTicks();
+    player->isAnimating = false;
 
-    player->texture = IMG_LoadTexture(app->renderer, "../assets/Characters_V3_Colour.png");
+    player->texture = IMG_LoadTexture(app->renderer, "../assets/player-sprite-sheet.png");
 }
 
 void setup(App *app, Actor *actor, Stage *stage) {
@@ -50,34 +54,53 @@ void setup(App *app, Actor *actor, Stage *stage) {
     SDL_GetDisplayBounds(0, &screenBounds);
 }
 
-static void handlePlayer(App *app, Actor *actor, Stage *stage, double deltaTime) {
+static void handlePlayer(App *app, Actor *player, Stage *stage, double deltaTime) {
     // create screen collision
-    if (actor->actorPosition.x < 0) actor->actorPosition.x = 0;
-    if (actor->actorPosition.x > screenBounds.w - 32) actor->actorPosition.x = screenBounds.w - 32;
-    if (actor->actorPosition.y < 0) actor->actorPosition.y = 0;
-    if (actor->actorPosition.y > screenBounds.h - 32) actor->actorPosition.y = screenBounds.h - 32;
+    if (player->actorPosition.x < 0) player->actorPosition.x = 0;
+    if (player->actorPosition.x > screenBounds.w - 32) player->actorPosition.x = screenBounds.w - 32;
+    if (player->actorPosition.y < 0) player->actorPosition.y = 0;
+    if (player->actorPosition.y > screenBounds.h - 32) player->actorPosition.y = screenBounds.h - 32;
 
-    if (actor->actorPosition.x >= 0
-        && actor->actorPosition.y >= 0
-        && actor->actorPosition.x <= screenBounds.w - 32
-        && actor->actorPosition.y <= screenBounds.h - 32) {
-        if (actor->reload > 0) {
-            actor->reload--;
+    if (player->actorPosition.x >= 0
+        && player->actorPosition.y >= 0
+        && player->actorPosition.x <= screenBounds.w - 32
+        && player->actorPosition.y <= screenBounds.h - 32) {
+        player->isAnimating = false;
+        resetSprite(player);
+
+        if (player->reload > 0) {
+            player->reload--;
         }
         if (app->keyboard[SDL_SCANCODE_W]) {
-            actor->actorPosition.y -= actor->actorVelocity.y * deltaTime;
+            player->isAnimating = true;
+            animate(player, 2);
+            player->actorPosition.y -= player->actorVelocity.y * deltaTime;
         }
         if (app->keyboard[SDL_SCANCODE_S]) {
-            actor->actorPosition.y += actor->actorVelocity.y * deltaTime;
+            player->isAnimating = true;
+            animate(player, 1);
+            player->actorPosition.y += player->actorVelocity.y * deltaTime;
         }
         if (app->keyboard[SDL_SCANCODE_D]) {
-            actor->actorPosition.x += actor->actorVelocity.x * deltaTime;
+            player->isAnimating = true;
+            animate(player, 3);
+            player->actorPosition.x += player->actorVelocity.x * deltaTime;
         }
         if (app->keyboard[SDL_SCANCODE_A]) {
-            actor->actorPosition.x -= actor->actorVelocity.x * deltaTime;
+            player->isAnimating = true;
+            animate(player, 4);
+            player->actorPosition.x -= player->actorVelocity.x * deltaTime;
         }
-        if (app->keyboard[SDL_SCANCODE_F] && actor->reload == 0) {
-            fireArrow(stage, actor);
+        if (app->keyboard[SDL_SCANCODE_LSHIFT]) {
+            player->actorVelocity.x = 350;
+            player->actorVelocity.y = 350;
+            player->frameRatePerSecond = 10;
+        } else {
+            player->actorVelocity.x = 200;
+            player->actorVelocity.y = 200;
+        }
+        if (app->keyboard[SDL_SCANCODE_F] && !player->isAnimating && player->reload == 0) {
+            fireArrow(stage, player);
         }
     }
 }
